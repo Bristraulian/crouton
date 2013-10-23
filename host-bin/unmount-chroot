@@ -172,6 +172,10 @@ unmount() {
     else
         oldstyle=''
         CHROOT="$ROOT/${CHROOT#/}"
+        if [ ! -d "$CHROOT" ]; then
+            # Not mounted
+            continue
+        fi
     fi
 
     base="`readlink -f "$CHROOT"`"
@@ -197,7 +201,7 @@ unmount() {
     # Unmount all mounts
     ntries=0
     if [ -z "$EXCLUDEROOT" ]; then
-        echo "Unmounting $CHROOT..." 1>&2
+        echo "Unmounting $CHROOTSRC..." 1>&2
     else
         echo "Pruning $CHROOTSRC mounts..." 1>&2
     fi
